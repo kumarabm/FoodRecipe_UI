@@ -388,17 +388,16 @@
 
 
 import React, { useState, useEffect } from 'react';
-import Navbar from '../components/Navbar';
 import { useNavigate } from 'react-router-dom';
+import Navbar from './Navbar';
 import '../style/recipe.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const Recipe = () => {
+const Recipe = ({ addToFavorites, favorites }) => {
   const [categories, setCategories] = useState([]);
   const [recipes, setRecipes] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
-
-  const navigate = useNavigate(); // Initialize navigate hook
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -437,60 +436,71 @@ const Recipe = () => {
     }
   }, [selectedCategory]);
 
+  const handleAddToFavorites = (meal) => {
+    addToFavorites(meal); // Add meal to favorites list
+  };
+
   return (
     <div>
-       <Navbar />
-    <div className="container py-5">
-      <h2>Meal Categories</h2>
-      <div className="category-list">
-        {categories.map((category) => (
-          <button
-            key={category.strCategory}
-            onClick={() => setSelectedCategory(category.strCategory)}
-            className="category-btn"
-          >
-            {category.strCategory}
-          </button>
-        ))}
-      </div>
+      <Navbar favorites={favorites} />
+      <div className="container py-5">
+        <h2>Meal Categories</h2>
+        <div className="category-list">
+          {categories.map((category) => (
+            <button
+              key={category.strCategory}
+              onClick={() => setSelectedCategory(category.strCategory)}
+              className="category-btn"
+            >
+              {category.strCategory}
+            </button>
+          ))}
+        </div>
 
-      {selectedCategory && (
-        <div>
-          <h3>Meals in {selectedCategory}</h3>
-          <div className="row">
-            {recipes.length > 0 ? (
-              recipes.map((meal) => (
-                <div key={meal.idMeal} className="col-md-4 col-sm-6 d-flex">
-                  <div className="card recipe">
-                    <img
-                      src={meal.strMealThumb}
-                      className="card-img-top image"
-                      alt={meal.strMeal}
-                    />
-                    <div className="card-body">
-                      <h5 className="card-title">{meal.strMeal}</h5>
-                      {/* Link to navigate to the detailed recipe page */}
-                      <button
-                        className="btn btn-primary"
-                        onClick={() => navigate(`/recipe/${meal.idMeal}`)}
-                      >
-                        View Recipe
-                      </button>
+        {selectedCategory && (
+          <div>
+            <h3>Meals in {selectedCategory}</h3>
+            <div className="row">
+              {recipes.length > 0 ? (
+                recipes.map((meal) => (
+                  <div key={meal.idMeal} className="col-md-4 col-sm-6 d-flex">
+                    <div className="card recipe">
+                      <img
+                        src={meal.strMealThumb}
+                        className="card-img-top image"
+                        alt={meal.strMeal}
+                      />
+                      <div className="card-body">
+                        <h5 className="card-title">{meal.strMeal}</h5>
+                        {/* Link to navigate to the detailed recipe page */}
+                        <button
+                          className="btn btn-primary"
+                          onClick={() => navigate(`/recipe/${meal.idMeal}`)}
+                        >
+                          View Recipe
+                        </button>
+                        <button
+                          className="btn btn-secondary mt-2"
+                          onClick={() => handleAddToFavorites(meal)}
+                        >
+                          Add to Favorites
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))
-            ) : (
-              <p className="text-center">No meals found in this category.</p>
-            )}
+                ))
+              ) : (
+                <p className="text-center">No meals found in this category.</p>
+              )}
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
-    </div>
-   
   );
 };
 
 export default Recipe;
+
+
 
