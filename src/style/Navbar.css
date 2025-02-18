@@ -1,0 +1,70 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Light shadow for elevation */
+  z-index: 1000;
+}
+
+.navbar__left {
+  display: flex;
+  align-items: center;
+}
+
+.navbar__icon {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-right: 20px; /* Spacing between icons */
+  color: #606060;
+  font-size: 14px;
+  transition: color 0.3s ease;
+}
+
+.navbar__icon:hover {
+  color: #000; /* Darker on hover */
+}
+
+.navbar__icon span {
+  margin-left: 5px;
+}
+
+.navbar__right {
+  display: flex;
+  align-items: center;
+}
+
+.navbar__search {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.navbar__search-input {
+  border: none;
+  padding: 5px 10px;
+  font-size: 14px;
+  outline: none;
+  width: 200px;
+}
+
+.navbar__search-button {
+  background-color: #f8f8f8;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navbar__search-button:hover {
+  background-color: #e8e8e8;
+}
